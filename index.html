@@ -216,10 +216,10 @@
   }
   /* 1. Animation Keyframes (Bus kaise move karegi) */
 @keyframes drive-bus {
-    0% { transform: translateX(100vw); opacity: 0; }
+    0% { left:100%; opacity: 0; }
     10% { opacity: 1.5; }
     90% { opacity: 1.5; }
-    100% { transform: translateX(-60px); opacity: 0; }
+    100% { left:-60px; opacity: 0; }
   }
 
 /* 2. Animation Container (Header ke peeche layer) */
@@ -238,10 +238,10 @@
 /* 3. Animated Bus Element */
 .animated-bus {
     position: absolute; 
-    bottom: 18%; 
+    top: 50%; 
     font-size: 28px; 
     z-index: 1;
-    transform: translateY(-50%) scaleX(-1); /* Bus ko flip karne ke liye scaleX(-1) add kiya hai */
+    transform: translateY(-50%) ; /* Bus ko flip karne ke liye scaleX(-1) add kiya hai */
     animation: bus-travel 10s linear infinite;
   }
 
