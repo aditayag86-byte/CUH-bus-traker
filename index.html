@@ -337,17 +337,16 @@ try {
 
 // ====== 2. CAMPUS DATA — edit stop names/coords and routes to match your real campus ======
 const STOPS = {
-  "Main Gate":       { lat: 28.3710, lng: 76.1120 },
-  "Library":         { lat: 28.3730, lng: 76.1145 },
-  "Hostel Block":    { lat: 28.3695, lng: 76.1100 },
+  "Gate no.2":       { lat: 28.36110466863367, lng:76.14737276496997 },
+  "SOET":    { lat:28.35945956272204,lng: 76.14742228276653 },
   "Academic Block":  { lat: 28.3750, lng: 76.1160 },
-  "Sports Complex":  { lat: 28.3720, lng: 76.1080 },
-  "Market Gate":     { lat: 28.3680, lng: 76.1130 }
+  "New girls hostel":  { lat: 28.355656963036402, lng:76.15208409199958 },
+  "main gate":     { lat:28.351533632167175, lng:76.13067817737537}
 };
 const BUSES = {
-  "BUS-01": { name: "Route 1", stops: ["Hostel Block", "Main Gate", "Library", "Academic Block"] },
-  "BUS-02": { name: "Route 2", stops: ["Market Gate", "Main Gate", "Sports Complex", "Academic Block"] },
-  "BUS-03": { name: "Route 3", stops: ["Hostel Block", "Sports Complex", "Library"] }
+  "BUS-01": { name: "Route 1", stops: ["SOET ", "Gate no. 2", "New girls hostel", "Academic Block","main gate"] },
+  "BUS-02": { name: "Route 2", stops: ["SOET ", " Gate no. 2", "New girls hostel", "Academic Block","main gate"] },
+  "BUS-03": { name: "Route 3", stops: ["SOET ", "Gate no. 2", "New girls hostel", "Academic Block","main gate"] }
 };
 const STALE_MS = 45000;      // after this long with no update, flag as possibly outdated
 const OFFLINE_MS = 120000;   // after this long, treat as offline regardless of stored status
