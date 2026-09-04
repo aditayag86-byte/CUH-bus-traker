@@ -1,0 +1,16 @@
+{
+  "name": "CUH Transit",
+  "short_name": "CUH Transit",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#eceefb",
+  "theme_color": "#12151c",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3448/3448339.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
