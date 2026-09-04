@@ -237,11 +237,12 @@
 
 /* 3. Animated Bus Element */
 .animated-bus {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 26px;
-    animation: drive-bus 10s linear infinite;
+    position: absolute; 
+    bottom: 22%; 
+    font-size: 28px; 
+    z-index: 1;
+    transform: translateY(-50%) scaleX(-1); /* Bus ko flip karne ke liye scaleX(-1) add kiya hai */
+    animation: bus-travel 10s linear infinite;
   }
 
 /* 4. Header Board ki Styling ko Update karna padega taaki animation uske andar chale */
