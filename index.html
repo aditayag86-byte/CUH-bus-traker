@@ -214,18 +214,66 @@
   @media (prefers-reduced-motion: reduce){
     .bus-card, .big-btn, .toast{transition:none;}
   }
+  /* 1. Animation Keyframes (Bus kaise move karegi) */
+@keyframes drive-bus {
+  0% { left: -50px; opacity: 0; }    /* Shuru mein header ke bahar left mein hogi */
+  10% { opacity: 1; }               /* Dheere dheere dikhegi */
+  90% { opacity: 1; }               /* Chalti rahegi */
+  100% { left: 100%; opacity: 0; }  /* Header ke bahar right mein gayab ho jayegi */
+}
+
+/* 2. Animation Container (Header ke peeche layer) */
+.bus-animation-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none; /* Taaki user click header par hi kare, bus par nahi */
+  z-index: 0; /* Text ke peeche rahegi */
+  opacity: 0.20; /* Bohot halki dikhegi taaki text clear rahe */
+}
+
+/* 3. Animated Bus Element */
+.animated-bus {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px; /* Bus ka size */
+  animation: drive-bus 10s linear infinite; /* 15 seconds mein ek round, hamesha chalegi */
+}
+
+/* 4. Header Board ki Styling ko Update karna padega taaki animation uske andar chale */
+.board {
+  background: var(--ink);
+  color: var(--amber);
+  padding: 16px;
+  border-bottom: 3px solid var(--amber);
+  position: relative; /* Yeh zaroori hai animation container ke liye */
+  overflow: hidden; /* Taaki bus bahar na dikhe */
+}
+.board-row, .board-sub {
+  position: relative;
+  z-index: 1; /* Text animation ke upar rahega */
+}
 </style>
 </head>
 <body>
 <div class="app">
 
   <div class="board">
-    <div class="board-row">
-      <span class="board-title">GoRaah</span>
-      <span class="board-clock" id="clock">--:--:--</span>
-    </div>
-    <div class="board-sub" id="boardSub">LIVE CAMPUS BUS BOARD</div>
+  <!-- Animation Container -->
+  <div class="bus-animation-container">
+    <div class="animated-bus">🚌</div>
   </div>
+
+  <div class="board-row">
+    <span class="board-title" style="font-size: 16px;">Where is my campus BUS</span>
+    <span class="board-clock" id="clock">--:--:--</span>
+  </div>
+  <div class="board-sub" id="boardSub">LIVE CAMPUS BUS BOARD</div>
+</div>
 
   <!-- STUDENT LIST -->
   <div id="screen-list" class="screen active">
