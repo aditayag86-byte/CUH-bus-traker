@@ -257,14 +257,93 @@
   position: relative;
   z-index: 1; /* Text animation ke upar rahega */
 }
+  /* --- 1. Motion Background Container --- */
+  .motion-bg {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%;
+    overflow: hidden;
+    pointer-events: none; z-index: 0;
+    opacity: 0.6;
+  }
+
+  /* --- 2. Sky and Clouds --- */
+  .sky {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 60%;
+    background: linear-gradient(to bottom, #0ea5e9 0%, #7dd3fc 100%);
+  }
+  .cloud {
+    position: absolute; background: white;
+    border-radius: 50px; animation: move-clouds linear infinite;
+    opacity: 0.8;
+  }
+  .cloud::before, .cloud::after {
+    content: ''; position: absolute; background: inherit;
+    border-radius: 50%;
+  }
+  .c1 { width: 100px; height: 40px; top: 20px; left: 10%; animation-duration: 35s; }
+  .c1::before { width: 50px; height: 50px; top: -25px; left: 15px; }
+  .c1::after { width: 40px; height: 40px; top: -15px; left: 55px; }
+
+  .c2 { width: 80px; height: 30px; top: 50px; left: 60%; animation-duration: 25s; animation-delay: -5s; }
+  .c2::before { width: 40px; height: 40px; top: -20px; left: 10px; }
+  .c2::after { width: 30px; height: 30px; top: -10px; left: 40px; }
+
+  @keyframes move-clouds {
+    from { left: 100%; }
+    to { left: -150px; }
+  }
+
+  /* --- 3. Road and Markings --- */
+  .road {
+    position: absolute; bottom: 0; left: 0;
+    width: 100%; height: 40%;
+    background: #475569;
+    border-top: 4px solid #64748b;
+  }
+  .road-lines {
+    position: absolute; top: 50%; left: 0;
+    transform: translateY(-50%);
+    width: 200%; height: 4px;
+    background: repeating-linear-gradient(
+      to right, white, white 50px, transparent 50px, transparent 100px
+    );
+    animation: move-road 1s linear infinite;
+  }
+
+  @keyframes move-road {
+    from { left: -100%; }
+    to { left: 0%; }
+  }
+
+  /* --- 4. Animated Bus & Board Layout --- */
+  .animated-bus {
+    position: absolute; bottom: 25%; left: 50%;
+    transform: translateX(-50%);
+    font-size: 32px; z-index: 1;
+  }
+  .board {
+    position: relative; overflow: hidden;
+    background: var(--ink); color: var(--amber);
+    padding: 16px; border-bottom: 3px solid var(--amber);
+    height: 80px;
+  }
+  .board-row, .board-sub { position: relative; z-index: 2; }
 </style>
 </head>
 <body>
 <div class="app">
 
-  <div class="board">
-  <!-- Animation Container -->
-  <div class="bus-animation-container">
+ <div class="board">
+  <!-- Motion Background with Sky, Clouds, and Road -->
+  <div class="motion-bg">
+    <div class="sky">
+      <div class="cloud c1"></div>
+      <div class="cloud c2"></div>
+    </div>
+    <div class="road">
+      <div class="road-lines"></div>
+    </div>
     <div class="animated-bus">🚌</div>
   </div>
 
