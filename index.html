@@ -217,8 +217,8 @@
   /* 1. Animation Keyframes (Bus kaise move karegi) */
 @keyframes drive-bus {
     0% { transform: translateX(100vw); opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
+    10% { opacity: 1.5; }
+    90% { opacity: 1.5; }
     100% { transform: translateX(-60px); opacity: 0; }
   }
 
@@ -263,7 +263,7 @@
     width: 100%; height: 100%;
     overflow: hidden;
     pointer-events: none; z-index: 0;
-    opacity: 0.6;
+    opacity: 0.9;
   }
 
   /* --- 2. Sky and Clouds --- */
@@ -275,7 +275,7 @@
   .cloud {
     position: absolute; background: white;
     border-radius: 50px; animation: move-clouds linear infinite;
-    opacity: 1;
+    opacity: 2;
   }
   .cloud::before, .cloud::after {
     content: ''; position: absolute; background: inherit;
@@ -308,7 +308,7 @@
     background: repeating-linear-gradient(
       to right, white, white 50px, transparent 50px, transparent 100px
     );
-    animation: move-road 3s linear infinite;
+    animation: move-road 9s linear infinite;
   }
 
   @keyframes move-road {
@@ -329,7 +329,7 @@
     bottom: 22%; 
     font-size: 28px; 
     z-index: 1;
-    transform: translateX(-50%) scaleY(-1); /* Bus ko left side face karane ke liye flip kiya hai */
+    transform: translateY(-50%) scaleX(-1); /* Bus ko left side face karane ke liye flip kiya hai */
     animation: bus-travel 10s linear infinite; /* 9 seconds mein right se left poori travel karegi */
   }
 </style>
