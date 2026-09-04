@@ -476,7 +476,7 @@ function renderBusList(filter = "") {
           <span class="bus-id">${id}</span>
           <span class="status-txt offline" id="card-status-${id}"><span class="dot offline"></span>OFFLINE</span>
         </div>
-        <div class="bus-route">${BUSES[id].name} · ${BUSES[id].stops.join(" → ")}</div>
+        <div class="bus-route">${BUSES[id].name} · ${BUSES[id].routeText}</div>
       </div>
     </div>`).join("");
 
@@ -499,7 +499,7 @@ window.openDetail = (busId) => {
   currentBusId = busId;
   const bus = BUSES[busId];
   document.getElementById('d-busId').textContent = busId;
-  document.getElementById('d-route').textContent = `${bus.name} · ${bus.stops.join(" → ")}`;
+  document.getElementById('d-route').textContent = `${bus.name} · ${bus.routeText}`;
   const shareUrl = `${location.origin}${location.pathname}?bus=${busId}`;
   document.getElementById('shareLink').textContent = shareUrl;
   window._shareUrl = shareUrl;
@@ -584,7 +584,7 @@ function refreshTrackerCard(type) {
   const bus = BUSES[busId];
   const prefix = type === 'driver' ? 'drv' : 'vol';
   document.getElementById(`${prefix}-busId`).textContent = busId;
-  document.getElementById(`${prefix}-route`).textContent = `${bus.name} · ${bus.stops.join(" → ")}`;
+  document.getElementById(`${prefix}-route`).textContent = `${bus.name} · ${bus.routeText}`;
 }
 document.getElementById('driverBusSelect').addEventListener('change', () => refreshTrackerCard('driver'));
 document.getElementById('volBusSelect').addEventListener('change', () => refreshTrackerCard('volunteer'));
