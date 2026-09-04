@@ -488,11 +488,10 @@ function renderBusList(filter = "") {
     return;
   }
   const vehicleImages = {
-    "BUS-01": "https://iconscout.com/icons/yellow-bus",
-    "BUS-02": "https://cdn-icons-png.flaticon.com/512/3448/3448339.png",
-    "BUS-03": "https://cdn-icons-png.flaticon.com/512/2991/2991148.png"
+    "BUS-01": "./cartoon-yellow-school-bus-icon-vector.png", // (apne file ka exact lamba naam yahan daal do)
+    "BUS-02": "./blue-white-city-bus-illustration.png",       // (apni doosri bus ka naam)
+    "BUS-03": "./images.jpg"                                 // (teesri image ka naam)
   };
-
   listEl.innerHTML = entries.map(id => `
     <div class="bus-card offline" id="card-${id}" onclick="openDetail('${id}')">
       <div class="stub"></div>
