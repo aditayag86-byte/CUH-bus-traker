@@ -241,7 +241,7 @@
     top: 50%;
     transform: translateY(-50%);
     font-size: 26px;
-    animation: drive-bus 12s linear infinite;
+    animation: drive-bus 10s linear infinite;
   }
 
 /* 4. Header Board ki Styling ko Update karna padega taaki animation uske andar chale */
@@ -275,7 +275,7 @@
   .cloud {
     position: absolute; background: white;
     border-radius: 50px; animation: move-clouds linear infinite;
-    opacity: 0.8;
+    opacity: 1;
   }
   .cloud::before, .cloud::after {
     content: ''; position: absolute; background: inherit;
@@ -329,7 +329,7 @@
     bottom: 22%; 
     font-size: 28px; 
     z-index: 1;
-    transform: translateY(-50%) scaleX(-1); /* Bus ko left side face karane ke liye flip kiya hai */
+    transform: translateX(-50%) scaleY(-1); /* Bus ko left side face karane ke liye flip kiya hai */
     animation: bus-travel 10s linear infinite; /* 9 seconds mein right se left poori travel karegi */
   }
 </style>
