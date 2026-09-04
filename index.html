@@ -419,17 +419,21 @@ function toast(msg) {
 
 // ====== 5. NAVIGATION ======
 window.switchTab = (tab) => {
+  // NAYI LOGIC: Driver tab par click hone par PIN maange
+  if (tab === 'driver') {
+    const enteredPin = prompt("Driver Verification: Please enter the 4-digit Driver PIN.");
+    if (enteredPin !== "1234") { // Aap is "1234" ko apne secret PIN se badal sakte hain
+      toast("Incorrect PIN. Access restricted.");
+      return; // PIN galat hone par wahi rok dega
+    }
+  }
+
+  // Original tab switching logic
   document.querySelectorAll('.tab').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
   document.getElementById('screen-list').classList.toggle('active', tab === 'list');
   document.getElementById('screen-driver').classList.toggle('active', tab === 'driver');
   document.getElementById('screen-volunteer').classList.toggle('active', tab === 'volunteer');
   document.getElementById('screen-detail').classList.remove('active');
-};
-window.goList = () => {
-  if (detailUnsub) { detailUnsub(); detailUnsub = null; }
-  document.querySelectorAll('.tab').forEach(b => b.classList.toggle('active', b.dataset.tab === 'list'));
-  document.getElementById('screen-detail').classList.remove('active');
-  document.getElementById('screen-list').classList.add('active');
 };
 
 // ====== 6. BUS LIST (Student home) ======
@@ -580,10 +584,18 @@ window.handleStartTrip = async (type) => {
   try {
     const snap = await get(ref(db, 'buses/' + busId));
     const data = snap.val();
+    
     if (isLiveNow(data)) {
+      // NAYI LOGIC: Agar Driver already active hai, toh volunteer ko block kar do
+      if (data.trackerType === 'driver' && type === 'volunteer') {
+        toast("Access Denied: The official Driver is already sharing the live location.");
+        return; 
+      }
+      
+      // Baaki conditions mein (jaise Driver kisi volunteer ki jagah le raha ho) allow karein
       pendingTakeover = { busId, type };
       document.getElementById('takeoverText').textContent =
-        `${busId} already has an active ${data.trackerType || 'driver'} tracker sharing its location. Starting here will take over as the tracker for everyone viewing this bus.`;
+        `${busId} already has an active tracker. Starting here will take over as the main tracker.`;
       document.getElementById('takeoverModal').classList.add('show');
       return;
     }
@@ -591,8 +603,6 @@ window.handleStartTrip = async (type) => {
     console.error("Takeover check failed, starting anyway:", err);
     toast("Couldn't check Firebase (see console) — starting trip anyway");
   }
-  beginTracking(busId, type);
-};
 
 function isSecureContextOk() {
   // Geolocation requires a secure context: https, or http on localhost/127.0.0.1.
@@ -613,6 +623,11 @@ function beginTracking(busId, type) {
   document.getElementById(prefix === 'drv' ? 'btnStop' : 'volBtnStop').style.display = 'block';
   document.getElementById(`${prefix}-dot`).className = 'dot live';
   document.getElementById(`${prefix}-statusTxt`).textContent = 'LIVE';
+  
+  // NAYI LINE: Dropdown lock karein taaki active trip ke beech bus change na ho
+  document.getElementById('driverBusSelect').disabled = true;
+  document.getElementById('volBusSelect').disabled = true;
+
   toast(`Sharing location for ${busId}`);
 
   watchId = navigator.geolocation.watchPosition(
@@ -641,11 +656,15 @@ window.stopTrip = () => {
     document.getElementById(`${prefix}-speed`).textContent = '0 km/h';
     document.getElementById(`${prefix}-acc`).textContent = '— m';
   });
+  
+  // NAYI LINE: Trip stop hone par dropdown wapas unlock karein
+  document.getElementById('driverBusSelect').disabled = false;
+  document.getElementById('volBusSelect').disabled = false;
+
   if (currentBusId) update(ref(db, 'buses/' + currentBusId), { status: "OFFLINE" });
   toast("Trip stopped");
   currentBusId = null; activeTrackerType = null;
 };
-
 // ====== 9. CLOCK + BOOT ======
 function tickClock() {
   document.getElementById('clock').textContent = new Date().toLocaleTimeString('en-GB');
