@@ -335,18 +335,19 @@ try {
   console.error("Firebase failed to initialize:", err);
 }
 
+ 
 // ====== 2. CAMPUS DATA — edit stop names/coords and routes to match your real campus ======
 const STOPS = {
-  "Gate no.2":       { lat: 28.36110466863367, lng:76.14737276496997 },
-  "SOET":    { lat:28.35945956272204,lng: 76.14742228276653 },
+  "Gate no. 2":      { lat: 28.36110466863367, lng: 76.14737276496997 },
+  "SOET":            { lat: 28.35945956272204, lng: 76.14742228276653 },
   "Academic Block":  { lat: 28.3750, lng: 76.1160 },
-  "New girls hostel":  { lat: 28.355656963036402, lng:76.15208409199958 },
-  "main gate":     { lat:28.351533632167175, lng:76.13067817737537}
+  "New girls hostel":{ lat: 28.355656963036402, lng: 76.15208409199958 },
+  "main gate":       { lat: 28.351533632167175, lng: 76.13067817737537 }
 };
 const BUSES = {
-  "BUS-01": { name: "Route 1", stops: ["SOET ", "Gate no. 2", "New girls hostel", "Academic Block","main gate"] },
-  "BUS-02": { name: "Route 2", stops: ["SOET ", " Gate no. 2", "New girls hostel", "Academic Block","main gate"] },
-  "BUS-03": { name: "Route 3", stops: ["SOET ", "Gate no. 2", "New girls hostel", "Academic Block","main gate"] }
+  "BUS-01": { name: "Route 1", stops: ["SOET", "Gate no. 2", "New girls hostel", "Academic Block", "main gate"] },
+  "BUS-02": { name: "Route 2", stops: ["SOET", "Gate no. 2", "New girls hostel", "Academic Block", "main gate"] },
+  "BUS-03": { name: "Route 3", stops: ["SOET", "Gate no. 2", "New girls hostel", "Academic Block", "main gate"] }
 };
 const STALE_MS = 45000;      // after this long with no update, flag as possibly outdated
 const OFFLINE_MS = 120000;   // after this long, treat as offline regardless of stored status
@@ -369,7 +370,6 @@ function haversineKm(lat1, lon1, lat2, lon2) {
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 }
 
-// Finds the closest stop on the bus's route, then reports the following stop as "next".
 function computeNextStop(busId, lat, lng) {
   const bus = BUSES[busId];
   const stopNames = bus.stops;
@@ -419,21 +419,25 @@ function toast(msg) {
 
 // ====== 5. NAVIGATION ======
 window.switchTab = (tab) => {
-  // NAYI LOGIC: Driver tab par click hone par PIN maange
   if (tab === 'driver') {
     const enteredPin = prompt("Driver Verification: Please enter the 4-digit Driver PIN.");
-    if (enteredPin !== "1234") { // Aap is "1234" ko apne secret PIN se badal sakte hain
+    if (enteredPin !== "1234") { 
       toast("Incorrect PIN. Access restricted.");
-      return; // PIN galat hone par wahi rok dega
+      return; 
     }
   }
 
-  // Original tab switching logic
   document.querySelectorAll('.tab').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
   document.getElementById('screen-list').classList.toggle('active', tab === 'list');
   document.getElementById('screen-driver').classList.toggle('active', tab === 'driver');
   document.getElementById('screen-volunteer').classList.toggle('active', tab === 'volunteer');
   document.getElementById('screen-detail').classList.remove('active');
+};
+window.goList = () => {
+  if (detailUnsub) { detailUnsub(); detailUnsub = null; }
+  document.querySelectorAll('.tab').forEach(b => b.classList.toggle('active', b.dataset.tab === 'list'));
+  document.getElementById('screen-detail').classList.remove('active');
+  document.getElementById('screen-list').classList.add('active');
 };
 
 // ====== 6. BUS LIST (Student home) ======
@@ -579,20 +583,16 @@ window.handleStartTrip = async (type) => {
   const sel = type === 'driver' ? document.getElementById('driverBusSelect') : document.getElementById('volBusSelect');
   const busId = sel.value;
 
-  // The takeover check is a courtesy, not a gate: if Firebase can't be reached
-  // (bad config, restrictive rules, offline), we still let the trip start.
   try {
     const snap = await get(ref(db, 'buses/' + busId));
     const data = snap.val();
     
     if (isLiveNow(data)) {
-      // NAYI LOGIC: Agar Driver already active hai, toh volunteer ko block kar do
       if (data.trackerType === 'driver' && type === 'volunteer') {
         toast("Access Denied: The official Driver is already sharing the live location.");
         return; 
       }
       
-      // Baaki conditions mein (jaise Driver kisi volunteer ki jagah le raha ho) allow karein
       pendingTakeover = { busId, type };
       document.getElementById('takeoverText').textContent =
         `${busId} already has an active tracker. Starting here will take over as the main tracker.`;
@@ -604,8 +604,11 @@ window.handleStartTrip = async (type) => {
     toast("Couldn't check Firebase (see console) — starting trip anyway");
   }
 
+  // YEH LINE MISSING THI PICHLE CODE MEIN!
+  beginTracking(busId, type);
+};
+
 function isSecureContextOk() {
-  // Geolocation requires a secure context: https, or http on localhost/127.0.0.1.
   return window.isSecureContext || ["localhost", "127.0.0.1"].includes(location.hostname);
 }
 window.closeModal = () => { document.getElementById('takeoverModal').classList.remove('show'); pendingTakeover = null; };
@@ -614,7 +617,6 @@ window.confirmTakeover = () => {
   if (pendingTakeover) beginTracking(pendingTakeover.busId, pendingTakeover.type);
   pendingTakeover = null;
 };
-
 function beginTracking(busId, type) {
   currentBusId = busId;
   activeTrackerType = type;
