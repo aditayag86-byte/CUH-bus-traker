@@ -308,7 +308,7 @@
     background: repeating-linear-gradient(
       to right, white, white 50px, transparent 50px, transparent 100px
     );
-    animation: move-road 1s linear infinite;
+    animation: move-road 3s linear infinite;
   }
 
   @keyframes move-road {
@@ -316,19 +316,22 @@
     to { left: 0%; }
   }
 
-  /* --- 4. Animated Bus & Board Layout --- */
+ /* --- 2. Bus full right-to-left travel animation --- */
+  @keyframes bus-travel {
+    0% { left: 100%; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { left: -60px; opacity: 0; }
+  }
+
   .animated-bus {
-    position: absolute; bottom: 25%; left: 50%;
-    transform: translateX(-50%);
-    font-size: 32px; z-index: 1;
+    position: absolute; 
+    bottom: 22%; 
+    font-size: 28px; 
+    z-index: 1;
+    transform: translateY(-50%) scaleX(-1); /* Bus ko left side face karane ke liye flip kiya hai */
+    animation: bus-travel 10s linear infinite; /* 9 seconds mein right se left poori travel karegi */
   }
-  .board {
-    position: relative; overflow: hidden;
-    background: var(--ink); color: var(--amber);
-    padding: 16px; border-bottom: 3px solid var(--amber);
-    height: 80px;
-  }
-  .board-row, .board-sub { position: relative; z-index: 2; }
 </style>
 </head>
 <body>
