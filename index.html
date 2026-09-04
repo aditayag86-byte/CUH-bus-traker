@@ -349,9 +349,21 @@ const STOPS = {
   "main gate":       { lat: 28.351533632167175, lng: 76.13067817737537 }
 };
 const BUSES = {
-  "BUS-01": { name: "Route 1", stops: ["SOET", "Gate no. 2","SOET", "Sports complex", "Residential Area", "New girls hostel", "Academic Block","No stop", "ADMIN block" ,"main gate"] },
-  "BUS-02": { name: "Route 2", stops: ["SOET", "Gate no. 2","SOET", "Sports complex", "Residential Area", "New girls hostel", "Academic Block","No stop",  "ADMIN block","main gate"] },
-  "BUS-03": { name: "Route 3", stops: ["SOET", "Gate no. 2","SOET",  "Sports complex", "Residential Area","New girls hostel", "Academic Block","No stop",  "ADMIN block","main gate"] }
+  "BUS-01": { 
+    name: "Route 1", 
+    routeText: "SOET → Gate no. 2 → New girls hostel → Academic Block → main gate", // UI ke liye
+    stops: ["SOET", "Gate no. 2", "SOET", "Sports complex", "Residential Area", "New girls hostel", "Academic Block", "No stop", "ADMIN block", "main gate"] // Map draw karne ke liye
+  },
+  "BUS-02": { 
+    name: "Route 2", 
+    routeText: "SOET → Gate no. 2 → New girls hostel → Academic Block → main gate",
+    stops: ["SOET", "Gate no. 2", "SOET", "Sports complex", "Residential Area", "New girls hostel", "Academic Block", "No stop", "ADMIN block", "main gate"] 
+  },
+  "BUS-03": { 
+    name: "Route 3", 
+    routeText: "SOET → Gate no. 2 → New girls hostel → Academic Block → main gate",
+    stops: ["SOET", "Gate no. 2", "SOET", "Sports complex", "Residential Area", "New girls hostel", "Academic Block", "No stop", "ADMIN block", "main gate"] 
+  }
 };
 const STALE_MS = 45000;      // after this long with no update, flag as possibly outdated
 const OFFLINE_MS = 120000;   // after this long, treat as offline regardless of stored status
