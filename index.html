@@ -216,11 +216,11 @@
   }
   /* 1. Animation Keyframes (Bus kaise move karegi) */
 @keyframes drive-bus {
-  0% { left: -50px; opacity: 0; }    /* Shuru mein header ke bahar left mein hogi */
-  10% { opacity: 1; }               /* Dheere dheere dikhegi */
-  90% { opacity: 1; }               /* Chalti rahegi */
-  100% { left: 100%; opacity: 0; }  /* Header ke bahar right mein gayab ho jayegi */
-}
+    0% { right: -50px; left: auto; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { right: 100%; left: auto; opacity: 0; }
+  }
 
 /* 2. Animation Container (Header ke peeche layer) */
 .bus-animation-container {
