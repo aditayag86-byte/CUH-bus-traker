@@ -357,30 +357,30 @@ try {
  
 // ====== 2. CAMPUS DATA — edit stop names/coords and routes to match your real campus ======
 const STOPS = {
-  "Gate no. 2":      { lat: 28.36110466863367, lng: 76.14737276496997 },
-  "SOET":            { lat: 28.35945956272204, lng: 76.14742228276653 },
-  "Academic Block":  { lat:28.351844439575636, lng:76.14762488687809 },
-  "Sports complex":{lat:28.355085678649274,lng: 76.14757489047292},
-  "No stop":{lat:28.352563620139005, lng:76.1328984921782},
-  "Residential Area":{lat:28.35512599739956,lng: 76.15212897148548},
-  "New girls hostel":{ lat: 28.35180538327466, lng:76.15206061502421},
-  "ADMIN block":{lat:28.351322159059137, lng:76.13258900725084},
-  "main gate":       { lat: 28.351533632167175, lng: 76.13067817737537 }
+  "Gate no. 2":        { lat: 28.36110466863367, lng: 76.14737276496997 },
+  "SOET":              { lat: 28.35945956272204, lng: 76.14742228276653 },
+  "Academic Block":    { lat: 28.351844439575636, lng: 76.14762488687809 },
+  "Sports complex":    { lat: 28.355085678649274, lng: 76.14757489047292 },
+  "No stop":           { lat: 28.352563620139005, lng: 76.1328984921782 },
+  "Residential Area":  { lat: 28.35512599739956, lng: 76.15212897148548 },
+  "New girls hostel":  { lat: 28.35180538327466, lng: 76.15206061502421 },
+  "ADMIN block":       { lat: 28.351322159059137, lng: 76.13258900725084 },
+  "main gate":         { lat: 28.351533632167175, lng: 76.13067817737537 }
 };
 const BUSES = {
   "BUS-01": { 
     name: "Route 1", 
-    routeText: "SOET → Gate no. 2 → New girls hostel → Academic Block → main gate", // UI ke liye
-    stops: ["SOET", "Gate no. 2", "SOET", "Sports complex", "Residential Area", "New girls hostel", "Academic Block", "No stop", "ADMIN block", "main gate"] // Map draw karne ke liye
+    displayStops: ["SOET", "Gate no. 2", "New girls hostel", "Academic Block", "main gate"],
+    stops: ["SOET", "Gate no. 2", "SOET", "Sports complex", "Residential Area", "New girls hostel", "Academic Block", "No stop", "ADMIN block", "main gate"] 
   },
   "BUS-02": { 
     name: "Route 2", 
-    routeText: "SOET → Gate no. 2 → New girls hostel → Academic Block → main gate",
+    displayStops: ["SOET", "Gate no. 2", "New girls hostel", "Academic Block", "main gate"],
     stops: ["SOET", "Gate no. 2", "SOET", "Sports complex", "Residential Area", "New girls hostel", "Academic Block", "No stop", "ADMIN block", "main gate"] 
   },
   "BUS-03": { 
     name: "Route 3", 
-    routeText: "SOET → Gate no. 2 → New girls hostel → Academic Block → main gate",
+    displayStops: ["SOET", "Gate no. 2", "New girls hostel", "Academic Block", "main gate"],
     stops: ["SOET", "Gate no. 2", "SOET", "Sports complex", "Residential Area", "New girls hostel", "Academic Block", "No stop", "ADMIN block", "main gate"] 
   }
 };
@@ -528,7 +528,7 @@ window.openDetail = (busId) => {
   currentBusId = busId;
   const bus = BUSES[busId];
   document.getElementById('d-busId').textContent = busId;
-  document.getElementById('d-route').textContent = `${bus.name} · ${bus.routeText}`;
+  document.getElementById('d-route').textContent = `${bus.name} · ${bus.displayThops ? bus.displayStops.join(" → ") : bus.routeText}`;
   const shareUrl = `${location.origin}${location.pathname}?bus=${busId}`;
   document.getElementById('shareLink').textContent = shareUrl;
   window._shareUrl = shareUrl;
