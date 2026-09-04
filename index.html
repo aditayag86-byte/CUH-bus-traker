@@ -12,6 +12,21 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
+  .bus-thumb {
+  width: 72px;
+  background: var(--paper-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--line);
+}
+.bus-thumb img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
   :root{
     --ink:#12151c;
     --ink-soft:#4b5160;
@@ -472,17 +487,27 @@ function renderBusList(filter = "") {
     listEl.innerHTML = `<div class="empty">No bus or stop matches "${filter}".</div>`;
     return;
   }
+  const vehicleImages = {
+    "BUS-01": "https://cdn-icons-png.flaticon.com/512/3448/3448339.png",
+    "BUS-02": "https://cdn-icons-png.flaticon.com/512/3448/3448339.png",
+    "BUS-03": "https://cdn-icons-png.flaticon.com/512/2991/2991148.png"
+  };
+
   listEl.innerHTML = entries.map(id => `
     <div class="bus-card offline" id="card-${id}" onclick="openDetail('${id}')">
       <div class="stub"></div>
+      <div class="bus-thumb">
+        <img src="${vehicleImages[id] || vehicleImages['BUS-01']}" alt="${id}">
+      </div>
       <div class="bus-main">
         <div class="bus-top">
           <span class="bus-id">${id}</span>
           <span class="status-txt offline" id="card-status-${id}"><span class="dot offline"></span>OFFLINE</span>
         </div>
-        <div class="bus-route">${BUSES[id].name} · ${BUSES[id].routeText}</div>
+        <div class="bus-route">${BUSES[id].name} · ${BUSES[id].displayStops.join(" → ")}</div>
       </div>
     </div>`).join("");
+  
 
   listUnsubs.forEach(u => u());
   listUnsubs = entries.map(id => onValue(ref(db, 'buses/' + id), (snap) => {
