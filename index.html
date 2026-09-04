@@ -341,13 +341,16 @@ const STOPS = {
   "Gate no. 2":      { lat: 28.36110466863367, lng: 76.14737276496997 },
   "SOET":            { lat: 28.35945956272204, lng: 76.14742228276653 },
   "Academic Block":  { lat:28.35075820387461, lng:76.1474716697323 },
-  "New girls hostel":{ lat: 28.355656963036402, lng: 76.15208409199958 },
+  "Sports complex":{lat:28.355085678649274,lng: 76.14757489047292},
+  "Residential Area":{lat:28.35512599739956,lng: 76.15212897148548},
+  "New girls hostel":{ lat: 28.35180538327466, lng:76.15206061502421},
+  
   "main gate":       { lat: 28.351533632167175, lng: 76.13067817737537 }
 };
 const BUSES = {
-  "BUS-01": { name: "Route 1", stops: ["SOET", "Gate no. 2", "New girls hostel", "Academic Block", "main gate"] },
-  "BUS-02": { name: "Route 2", stops: ["SOET", "Gate no. 2", "New girls hostel", "Academic Block", "main gate"] },
-  "BUS-03": { name: "Route 3", stops: ["SOET", "Gate no. 2", "New girls hostel", "Academic Block", "main gate"] }
+  "BUS-01": { name: "Route 1", stops: ["SOET", "Gate no. 2","SOET", "New girls hostel", "Academic Block", "main gate"] },
+  "BUS-02": { name: "Route 2", stops: ["SOET", "Gate no. 2","SOET", "New girls hostel", "Academic Block", "main gate"] },
+  "BUS-03": { name: "Route 3", stops: ["SOET", "Gate no. 2","SOET", "New girls hostel", "Academic Block", "main gate"] }
 };
 const STALE_MS = 45000;      // after this long with no update, flag as possibly outdated
 const OFFLINE_MS = 120000;   // after this long, treat as offline regardless of stored status
